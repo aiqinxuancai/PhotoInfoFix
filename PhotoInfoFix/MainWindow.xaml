@@ -4,10 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhotoInfoFix"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="600" Width="800">
     <Grid>
-        <DatePicker HorizontalAlignment="Left" Margin="59,10,0,0" VerticalAlignment="Top" Width="151" SelectedDateFormat="Long"/>
-        <DatePicker HorizontalAlignment="Left" Margin="59,39,0,0" VerticalAlignment="Top" Width="151"/>
+
+        <StackPanel Margin="10,10,10,10">
+            <TextBlock Text="选择图片修正的目录"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="pathTextBox" HorizontalAlignment="Left" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="330" Margin="0,10,0,0" MinHeight="30"/>
+                <Button x:Name="selectButton" Margin="10,10,0,0" Content="选择目录" FontSize="12" Click="selectButton_Click"></Button>
+            </StackPanel>
+        </StackPanel>
+
+        <mah:DateTimePicker x:Name="dateTimePicker" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" Width="322" SelectedDateFormat="Short" SelectedTimeFormat="Short"/>
+        <!--<mah:DateTimePicker></mah:DateTimePicker>-->
+
     </Grid>
 </Window>
