@@ -1,24 +1,62 @@
-﻿<Window x:Class="PhotoInfoFix.MainWindow"
+<Window x:Class="PhotoInfoFix.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhotoInfoFix"
-        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
-    <Grid>
+        Title="照片EXIF时间修正工具" Height="600" Width="1000" MinWidth="800" MinHeight="500">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="380"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <StackPanel Margin="10,10,10,10">
-            <TextBlock Text="选择图片修正的目录"/>
-            <StackPanel Orientation="Horizontal">
-                <TextBox x:Name="pathTextBox" HorizontalAlignment="Left" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="330" Margin="0,10,0,0" MinHeight="30"/>
-                <Button x:Name="selectButton" Margin="10,10,0,0" Content="选择目录" FontSize="12" Click="selectButton_Click"></Button>
-            </StackPanel>
+        <!-- Left Panel: Controls -->
+        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+            <GroupBox Header="1. 选择目录">
+                <StackPanel>
+                    <TextBox x:Name="pathTextBox" TextWrapping="Wrap" MinHeight="30" IsReadOnly="True"/>
+                    <Button x:Name="selectButton" Margin="0,5,0,0" Content="选择照片所在目录" Click="selectButton_Click"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="2. 查看EXIF时间并设置实际时间" Margin="0,10,0,0">
+                <StackPanel>
+                    <TextBlock Text="当前照片EXIF拍摄时间:"/>
+                    <TextBox x:Name="exifTimeTextBlock" Margin="0,5,0,0" IsReadOnly="True" FontWeight="Bold"/>
+
+                    <TextBlock Margin="0,10,0,0" Text="设置正确的拍摄时间:"/>
+                    <DatePicker x:Name="actualDatePicker" Margin="0,5,0,0" />
+                    <TextBox x:Name="actualTimeTextBox" Margin="0,5,0,0" Text="12:00:00"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="3. 确认时间差并修正" Margin="0,10,0,0">
+                <StackPanel>
+                    <TextBlock Text="计算出的时间偏移量:"/>
+                    <TextBox x:Name="timeOffsetTextBlock" Margin="0,5,0,0" IsReadOnly="True" FontWeight="Bold"/>
+                    <Button x:Name="applyFixButton" Content="对目录中所有照片应用此修正" Margin="0,10,0,0" IsEnabled="False" Click="applyFixButton_Click"/>
+                </StackPanel>
+            </GroupBox>
         </StackPanel>
 
-        <mah:DateTimePicker x:Name="dateTimePicker" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" Width="322" SelectedDateFormat="Short" SelectedTimeFormat="Short"/>
-        <!--<mah:DateTimePicker></mah:DateTimePicker>-->
+        <!-- Right Panel: Image Preview -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
+            <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="0">
+                <Image x:Name="imagePreview" Stretch="Uniform"/>
+            </Border>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                <Button x:Name="prevButton" Content="&lt; 上一张" Width="100" Click="prevButton_Click"/>
+                <TextBlock x:Name="imageCounterTextBlock" Text="0 / 0" Margin="10,0" VerticalAlignment="Center"/>
+                <Button x:Name="nextButton" Content="下一张 &gt;" Width="100" Click="nextButton_Click"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
